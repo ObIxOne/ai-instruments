@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Analyst | Best Offers</title>
+    <style>
+        /* Сброс стилей */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
+
+        /* Эффект свечения (Золотой) */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 5px;
+            background: #f59e0b;
+            box-shadow: 0 0 20px 5px #f59e0b;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .logo-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* AI Section */
+        .ai-section {
+            margin-bottom: 10px;
+        }
+
+        .ai-btn {
+            background: linear-gradient(90deg, #8b5cf6, #d946ef);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            transition: 0.2s;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .ai-output-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: left;
+            border: 1px solid #334155;
+            min-height: 0;
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+        
+        .ai-output-box.visible {
+            height: auto;
+            min-height: 80px;
+            opacity: 1;
+            margin-bottom: 20px;
+            border-color: #f59e0b; /* Золотая рамка при успехе */
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        /* Скрытый блок с кнопкой регистрации */
+        #hidden-offer-container {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #hidden-offer-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Основная кнопка */
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.3), 0 0 20px rgba(16, 185, 129, 0.6);
+            transition: transform 0.1s;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            animation: pulse-btn 2s infinite;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes pulse-btn {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #475569;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="logo-box">💎</div>
+
+            <h1 data-i18n="title">GAME PREDICTOR AI</h1>
+            
+            <p data-i18n="desc">
+                Our AI tracks platforms where players have been losing for 24+ hours. The payout cycle is inevitable.
+            </p>
+
+            <!-- Секция AI -->
+            <div class="ai-section">
+                <button class="ai-btn" onclick="scanWithAI(this)">
+                    🤖 <span data-i18n="ai_btn">USE ANALYSIS</span>
+                </button>
+                <div id="ai-output" class="ai-output-box"></div>
+            </div>
+
+            <!-- Скрытая секция с кнопкой регистрации (Всплывает ПОТОМ) -->
+            <div id="hidden-offer-container">
+                <button class="btn" onclick="handleRedirect()">
+                    <span data-i18n="cta_btn">CLAIM PAYOUT NOW</span>
+                </button>
+                <div style="margin-top: 10px; font-size: 11px; color: #cbd5e1;">
+                    <span data-i18n="timer_text">Opportunity valid for:</span> <span id="countdown" style="color:#f59e0b; font-weight:bold;">05:00</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer" data-i18n="footer">
+            Powered by Gemini Neural Network • v.4.2
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION (НАСТРОЙКИ) ---
+        const OFFER_LINK = "https://ggslots.win"; // ТВОЯ ССЫЛКА
+        const apiKey = "AIzaSyBFXdCi6FfCdZsQh2PijgzvScww6wXk9pI"; // ТВОЙ GEMINI API KEY
+
+        // --- LOCALIZATION (ПЕРЕВОДЫ) ---
+        const translations = {
+            en: {
+                title: "GAME PREDICTOR AI",
+                desc: "Our AI tracks platforms where players have been losing for 24+ hours. The payout cycle is inevitable.",
+                ai_btn: "USE ANALYSIS",
+                cta_btn: "ACCESS PLATFORM",
+                timer_text: "Opportunity valid for:",
+                footer: "Powered by Gemini Neural Network • v.4.2",
+                // Промпт: Универсальный текст, без названия платформы
+                ai_prompt: "You are a Casino Analyst. Briefly (max 25 words) in ENGLISH say: 'High probability of big win found on one platform due to long player losing streaks. Link generated. Platform access below'.",
+                ai_thinking: "Analyzing player loss data...",
+                redirecting: "ACCESSING PLATFORM..."
+            },
+            ru: {
+                title: "AI ПРЕДИКТОР",
+                desc: "Алгоритм ищет платформы с 'перегретым' пулом, где игроки сливали бюджет последние 24 часа.",
+                ai_btn: "ИСПОЛЬЗОВАТЬ АНАЛИЗ",
+                cta_btn: "ПЕРЕЙТИ НА ПЛАТФОРМУ",
+                timer_text: "Окно возврата открыто:",
+                footer: "Powered by Gemini Neural Network • v.4.2",
+                // Промпт на русском: Универсальный текст, как просили
+                ai_prompt: "Ты аналитик казино. Коротко (до 25 слов) на РУССКОМ скажи: 'Найдена высокая вероятность на одной из платформ забрать высокий выигрыш в связи с длительными проигрышами игроков. Ссылка сформирована. Платформа по кнопке ниже'.",
+                ai_thinking: "Анализ истории проигрышей...",
+                redirecting: "ПЕРЕХОД НА ПЛАТФОРМУ..."
+            },
+            es: {
+                title: "PREDICTOR DE JUEGOS IA",
+                desc: "Nuestra IA rastrea plataformas donde los jugadores han perdido mucho. El ciclo de pago es inminente.",
+                ai_btn: "USAR ANÁLISIS",
+                cta_btn: "ACCEDER A LA PLATAFORMA",
+                timer_text: "Oportunidad válida por:",
+                footer: "Powered by Gemini Neural Network • v.4.2",
+                ai_prompt: "Eres analista. Brevemente (máx 25 palabras) en ESPAÑOL di: 'Alta probabilidad de ganar en una plataforma detectada debido a rachas de pérdidas. Enlace generado. Acceda mediante el botón de abajo'.",
+                ai_thinking: "Analizando pérdidas...",
+                redirecting: "ACCEDIENDO..."
+            },
+            pt: {
+                title: "PREDICTOR DE JOGOS IA",
+                desc: "Nossa IA rastreia onde jogadores perderam muito nas últimas 24h. O ciclo de pagamento é inevitável.",
+                ai_btn: "USAR ANÁLISE",
+                cta_btn: "ACESSAR PLATAFORMA",
+                timer_text: "Sinal válido por:",
+                footer: "Powered by Gemini Neural Network • v.4.2",
+                ai_prompt: "Você é analista. Brevemente (máx 25 palavras) em PORTUGUÊS diga: 'Alta probabilidade de ganho encontrada em uma plataforma devido a longas perdas de jogadores. Link gerado. Acesse pelo botão abaixo'.",
+                ai_thinking: "Analisando histórico...",
+                redirecting: "ACESSANDO..."
+            }
+        };
+
+        // Auto Language Detection
+        let userLang = navigator.language || navigator.userLanguage; 
+        userLang = userLang.substr(0, 2).toLowerCase(); 
+        if (!translations[userLang]) userLang = 'en';
+        const currentLang = translations[userLang];
+
+        // Apply Translations
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (currentLang[key]) el.innerText = currentLang[key];
+            });
+        });
+
+        // Redirect Logic
+        function handleRedirect() {
+            const btn = document.querySelector('.btn span');
+            if(btn) btn.innerText = currentLang.redirecting;
+            setTimeout(() => window.location.href = OFFER_LINK, 800);
+        }
+
+        // --- CORE AI LOGIC ---
+        async function scanWithAI(btn) {
+            const outputBox = document.getElementById('ai-output');
+            const hiddenOffer = document.getElementById('hidden-offer-container');
+            
+            // 1. UI Changes on Start
+            outputBox.classList.add('visible');
+            outputBox.innerText = currentLang.ai_thinking;
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "default";
+
+            try {
+                // Generate a random delay between 5 and 10 seconds (5000ms - 10000ms)
+                const delay = Math.floor(Math.random() * 5000) + 5000;
+
+                // 2. Call Gemini and Wait for Delay
+                const [response] = await Promise.all([
+                    fetch(
+                        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{ parts: [{ text: currentLang.ai_prompt }] }]
+                            })
+                        }
+                    ),
+                    new Promise(resolve => setTimeout(resolve, delay)) // Wait for random delay
+                ]);
+
+                const data = await response.json();
+                let aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Opportunity found. Link generated below.";
+
+                // 3. Typing Effect
+                outputBox.innerText = "";
+                outputBox.style.color = "#4ade80"; // Green Success Text
+                outputBox.style.fontWeight = "bold";
+                
+                let i = 0;
+                outputBox.classList.add('typing-cursor');
+                
+                const typeWriter = setInterval(() => {
+                    if (i < aiText.length) {
+                        outputBox.innerText += aiText.charAt(i);
+                        i++;
+                    } else {
+                        // 4. WHEN TYPING IS DONE -> SHOW REGISTER BUTTON
+                        clearInterval(typeWriter);
+                        outputBox.classList.remove('typing-cursor');
+                        
+                        // Reveal the hidden offer with animation
+                        hiddenOffer.classList.add('show');
+                        
+                        // Start Timer only after offer is shown
+                        startTimer();
+                    }
+                }, 40); // Typing speed
+
+            } catch (error) {
+                console.error(error);
+                outputBox.innerText = "Connection error. Access link provided below.";
+                hiddenOffer.classList.add('show'); // Show button anyway on error
+            }
+        }
+
+        function startTimer() {
+            let time = 300; // 5 mins
+            const countdownEl = document.getElementById('countdown');
+            setInterval(() => {
+                if (time <= 0) return;
+                const m = Math.floor(time / 60);
+                let s = time % 60;
+                s = s < 10 ? '0' + s : s;
+                countdownEl.innerText = `0${m}:${s}`;
+                time--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
